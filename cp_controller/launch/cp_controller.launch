@@ -1,0 +1,15 @@
+<launch>
+    <arg name="rviz"       default="true" />
+    <arg name="use_mujoco" default="true"/>
+    <arg name="task_name"  default="mpc"/>
+    <group if="$(arg rviz)">
+      <include file="$(find cp_controller)/launch/visualize.launch"/>
+    </group>
+        
+    <node pkg="cp_controller" type="cartpole_mpc" name="cartpole_mpc"
+            output="screen" args="$(arg task_name)" launch-prefix=""/>
+    <node if="$(arg use_mujoco)" pkg="cp_controller" type="cartpole_mj_test" name="cartpole_mj_test"
+            output="screen" args="$(arg task_name)" launch-prefix="gnome-terminal --"/>
+    <node unless="$(arg use_mujoco)" pkg="cp_controller" type="cartpole_dummy_test" name="cartpole_dummy_test"
+            output="screen" args="$(arg task_name)" launch-prefix="gnome-terminal --"/>
+</launch>

@@ -1,0 +1,5 @@
+<launch>
+    <arg name="task_name"  default="mpc"/>
+    <node pkg="cp_controller" type="cartpole_mj_test" name="cartpole_mj_test"
+            output="screen" args="$(arg task_name)"/>
+</launch>

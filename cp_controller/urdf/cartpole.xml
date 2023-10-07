@@ -1,0 +1,29 @@
+<mujoco model="cartpole">
+  <option timestep="0.01" integrator="RK4">
+    <flag sensornoise="disable" contact="disable" energy="enable"/>
+  </option>
+  <compiler angle="radian" autolimits="true"/>
+  <statistic meansize="0.434336" extent="300" center="0 0 2"/>
+  <worldbody>
+    <geom size="150 0.025 0.025" pos="0 0 2" type="box" contype="0" conaffinity="0" group="1" density="0" rgba="0.75 0.75 0.75 0.8"/>
+    <body name="cart" pos="0 0 2">
+      <inertial pos="0 0 0" mass="2" diaginertia="1 1 1"/>
+      <joint name="slider_to_cart" pos="0 0 0" axis="1 0 0" type="slide" range="-150 150"/>
+      <geom size="0.25 0.25 0.1" type="box" contype="0" conaffinity="0" group="1" density="0" rgba="0.75 0.75 0.75 0.8"/>
+      <geom size="0.25 0.25 0.1" type="box" rgba="0.75 0.75 0.75 0.8"/>
+      <body name="pole">
+        <inertial pos="0 0 0.5" quat="0.707107 0 0 0.707107" mass="0.2" diaginertia="0.00555673 0.00555673 0.00555673"/>
+        <joint name="cart_to_pole" pos="0 0 0" axis="0 1 0"/>
+        <geom size="0.025 0.025 0.5" pos="0 0 0.5" type="box" contype="0" conaffinity="0" group="1" density="0" rgba="0.75 0.75 0.75 0.8"/>
+        <geom size="0.025 0.025 0.5" pos="0 0 0.5" type="box" rgba="0.75 0.75 0.75 0.8"/>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor joint="slider_to_cart" name="torque" gear="1" ctrllimited="true" ctrlrange="-50 50"/>
+  </actuator>
+  <sensor>
+    <jointpos joint="slider_to_cart" noise="0.0"/>
+    <jointvel joint="cart_to_pole" noise="0.0"/>
+  </sensor>
+</mujoco>
